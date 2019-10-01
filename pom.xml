@@ -63,8 +63,8 @@
 
     <repositories>
         <repository>
-            <id>Clojars</id>
-            <url>https://clojars.org/repo/</url>
+            <id>BeDataDriven</id>
+            <url>https://nexus.bedatadriven.com/content/repositories/public/</url>
         </repository>
     </repositories>
 
@@ -83,6 +83,11 @@
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
             <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mindrot.bcrypt</groupId>
+            <artifactId>bcrypt</artifactId>
+            <version>0.3</version>
         </dependency>
     </dependencies>
 </project>
