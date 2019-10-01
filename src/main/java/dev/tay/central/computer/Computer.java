@@ -1,5 +1,6 @@
 package dev.tay.central.computer;
 
+import dev.tay.central.filesystem.FileSystemElement;
 import dev.tay.central.utils.NetworkUtils;
 
 import java.text.DecimalFormat;
@@ -14,11 +15,13 @@ public class Computer {
     private String displayName;
     private List<User> users;
 
+    private FileSystemElement rootDirectory;
+
     public Computer(long id) {
-        this(id, null, null, null);
+        this(id, null, null, null, null);
     }
 
-    public Computer(long id, String ipAddress, String displayName, List<User> users) {
+    public Computer(long id, String ipAddress, String displayName, List<User> users, FileSystemElement rootDirectory) {
         this.id = id;
         if (ipAddress == null)
             this.ipAddress = NetworkUtils.generateIP();
@@ -35,6 +38,11 @@ public class Computer {
             this.users = new CopyOnWriteArrayList<>();
         else
             this.users = users;
+
+        if (rootDirectory == null)
+            this.rootDirectory = FileSystemElement.generateRootDirectory(this);
+        else
+            this.rootDirectory = rootDirectory;
     }
 
     public long getID() {
@@ -51,6 +59,10 @@ public class Computer {
 
     public List<User> getUsers() {
         return this.users;
+    }
+
+    public FileSystemElement getRootDirectory() {
+        return this.rootDirectory;
     }
 
 }
