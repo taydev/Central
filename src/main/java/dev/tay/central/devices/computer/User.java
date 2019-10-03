@@ -1,4 +1,4 @@
-package dev.tay.central.computer;
+package dev.tay.central.devices.computer;
 
 import dev.tay.central.utils.PasswordHashing;
 import org.mindrot.bcrypt.BCrypt;

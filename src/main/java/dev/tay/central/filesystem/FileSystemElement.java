@@ -1,7 +1,6 @@
 package dev.tay.central.filesystem;
 
-import dev.tay.central.computer.Computer;
-import dev.tay.central.computer.User;
+import dev.tay.central.devices.computer.Computer;
 import dev.tay.central.utils.ReflectionUtils;
 
 import javax.annotation.Nonnull;
