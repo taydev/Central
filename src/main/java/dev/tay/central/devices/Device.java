@@ -1,32 +1,41 @@
 package dev.tay.central.devices;
 
+import dev.tay.central.networking.Network;
 import dev.tay.central.utils.NetworkUtils;
 
 import java.text.DecimalFormat;
 import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class Device {
+public class Device {
 
     private long ownerId;
     private String ipAddress;
     private String displayName;
 
+    private Network network;
+
     public Device(long ownerId) {
-        this(ownerId, "", "");
+        this(ownerId, null, null, null);
     }
 
     public Device(long ownerId, String ipAddress, String displayName) {
+        this(ownerId, ipAddress, displayName, null);
+    }
+
+    public Device(long ownerId, String ipAddress, String displayName, Network network) {
         this.ownerId = ownerId;
-        if (ipAddress.equals(""))
+        if (ipAddress == null)
             this.ipAddress = NetworkUtils.generateIP();
         else
             this.ipAddress = ipAddress;
 
-        if (displayName.equals(""))
+        if (displayName == null)
             this.displayName = "DEFAULT-NODE-" + new DecimalFormat("000")
                 .format(ThreadLocalRandom.current().nextInt(0, 1000));
         else
             this.displayName = displayName;
+
+        this.network = network;
     }
 
     public long getOwnerID() {
@@ -47,6 +56,23 @@ public abstract class Device {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public Network getNetwork() {
+        return this.network;
+    }
+
+    public void setNetwork(Network network, boolean sync) {
+        this.network = network;
+
+        if (sync)
+            this.network.addDevice(this, false);
+    }
+
+    public boolean ping(String ipAddress) {
+        // TODO: Implement the rest of the (possible) networks. Probably needs some sort of index system.
+        // Only checks localhost at the moment.
+        return getNetwork() != null && (getNetwork().getDeviceByIP(ipAddress) != null || getNetwork().getMainframeIPAddress().equals(ipAddress));
     }
 
 }

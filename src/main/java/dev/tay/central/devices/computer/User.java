@@ -16,6 +16,10 @@ public class User {
     private User() {
     }
 
+    public User(long id, String username) {
+        this(id, username, PasswordHashing.generatePass(), PasswordHashing.generatePass());
+    }
+
     public User(long id, String username, String hashedPassword) {
         this(id, username, hashedPassword, PasswordHashing.generatePass());
     }

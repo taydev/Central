@@ -12,33 +12,24 @@ public class Computer extends Device {
     private List<User> users;
     private FileSystemElement rootDirectory;
 
-    private Network network;
-
     public Computer(long ownerId) {
-        this(ownerId, null, null, null, null, null);
+        this(ownerId, null, null, null, null);
     }
 
     public Computer(long ownerId, String ipAddress, String displayName, List<User> users,
                     FileSystemElement rootDirectory) {
-        this(ownerId, ipAddress, displayName, users, rootDirectory, null);
-    }
-
-    public Computer(long ownerId, String ipAddress, String displayName, List<User> users,
-                    FileSystemElement rootDirectory, Network network) {
         super(ownerId, ipAddress, displayName);
 
-        if (users == null)
+        if (users == null) {
             this.users = new CopyOnWriteArrayList<>();
-        else
+            this.users.add(new User(-1, "root"));
+        } else
             this.users = users;
 
         if (rootDirectory == null)
             this.rootDirectory = FileSystemElement.generateRootDirectory(this);
         else
             this.rootDirectory = rootDirectory;
-
-        // Technically speaking, it's okay if network is null. That just means it's offline... right?
-        this.network = network;
     }
 
     public List<User> getUsers() {
@@ -64,16 +55,4 @@ public class Computer extends Device {
     public FileSystemElement getRootDirectory() {
         return this.rootDirectory;
     }
-
-    public Network getNetwork() {
-        return this.network;
-    }
-
-    public boolean ping(String ipAddress) {
-        // TODO: Implement the rest of the (possible) networks. Probably needs some sort of index system.
-        // Only checks localhost at the moment.
-        Device device = getNetwork().getDeviceByIP(ipAddress);
-        return getNetwork().getDeviceByIP(ipAddress) != null;
-    }
-
 }
