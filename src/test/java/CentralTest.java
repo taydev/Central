@@ -1,6 +1,9 @@
 import dev.tay.central.devices.Device;
 import dev.tay.central.devices.computer.Computer;
+import dev.tay.central.filesystem.FileSystemElement;
 import dev.tay.central.networking.Network;
+
+import java.util.Collections;
 
 public class CentralTest {
 
@@ -9,7 +12,6 @@ public class CentralTest {
     public static void main(String[] args) {
         CentralTest instance = new CentralTest();
         instance.testInitialisation();
-        instance.testDeviceCreation();
     }
 
     private void log(String string, Object... args) {
@@ -22,6 +24,8 @@ public class CentralTest {
             network.getDisplayName(),
             network.getMainframeIPAddress(),
             network.getDevices().size());
+
+        testDeviceCreation();
     }
 
     private void testDeviceCreation() {
@@ -44,6 +48,7 @@ public class CentralTest {
     }
 
     private void testNetworking(String ipA, String ipB) {
+        // I just wanted to make sure this works.
         Computer computer = (Computer) network.getDeviceByIP(ipA);
         Device device = network.getDeviceByIP(ipB);
 
@@ -61,5 +66,64 @@ public class CentralTest {
         log("Can %s ping the mainframe? %b",
             device.getDisplayName(),
             device.ping(network.getMainframeIPAddress()));
+
+        testFilesystems(computer);
+    }
+
+    private void testFilesystems(Computer computer) {
+        log("Testing filesystem...");
+        exploreFilesystem(computer.getRootDirectory(), 0);
+        testFileCreation(computer);
+        log("Exploring updated filesystem...");
+        exploreFilesystem(computer.getRootDirectory(), 0);
+        testPathfinding(computer);
+        testFileDeletion(computer);
+    }
+
+    private void testFileCreation(Computer computer) {
+        log("Creating directory \"/test/\"...");
+        computer.getRootDirectory().createBlankDirectory("test");
+        log("Creating file \"/test/test.txt\"...");
+        computer.getRootDirectory().getDirectory("test").createFile("test.txt", "");
+        log("\"/test/test.txt\" contents: %s",
+            computer.getRootDirectory().getDirectory("test").getFile("test.txt").getFileContents());
+        log("Setting contents of \"/test/test.txt\" to \"test\"...");
+        computer.getRootDirectory().getDirectory("test").getFile("test.txt").setContents("test");
+        log("New contents of \"/test/test.txt\": %s",
+            computer.getRootDirectory().getDirectory("test").getFile("test.txt").getFileContents());
+    }
+
+    private void testPathfinding(Computer computer) {
+        log("File contents at path \"test/test.txt\": %s",
+            computer.getRootDirectory().getElementByRelativePath("test/test.txt").getFileContents());
+        log("File contents at path \"../sys/os.bin\" from \"test/\": %s",
+            computer.getRootDirectory().getDirectory("test").getElementByRelativePath("../sys/os.bin").getFileContents());
+        try {
+            log("File contents at invalid path \"../asdf/asdf.bin\": %s",
+                computer.getRootDirectory().getElementByRelativePath("../asdf/asdf.bin").getFileContents());
+        } catch (NullPointerException ignored) {
+            log("Caught invalid path at \"../asdf/asdf.bin\". Of course, this will never happen in actual code. We " +
+                "check our nulls like good boys.");
+        }
+    }
+
+    private void testFileDeletion(Computer computer) {
+        log("Deleting file \"/test/test.txt\"...");
+        computer.getRootDirectory().getDirectory("test").getFile("test.txt").delete();
+        log("New dir listing: ");
+        exploreFilesystem(computer.getRootDirectory(), 0);
+        log("Deleting folder \"/test/\"...");
+        computer.getRootDirectory().getDirectory("test").delete();
+        log("New dir listing: ");
+        exploreFilesystem(computer.getRootDirectory(), 0);
+    }
+
+    private void exploreFilesystem(FileSystemElement currentElement, int indent) {
+        log("%s- %s", String.join("", Collections.nCopies(indent, " ")), currentElement.getName());
+        if (currentElement.isDirectory()) {
+            for (FileSystemElement element : currentElement.getDirContents()) {
+                exploreFilesystem(element, indent + 2);
+            }
+        }
     }
 }
