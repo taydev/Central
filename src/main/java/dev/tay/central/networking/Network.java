@@ -55,4 +55,10 @@ public class Network {
         return this.devices.stream().filter(device -> device.getDisplayName().equals(displayName)).findFirst().orElse(null);
     }
 
+    public void addDevice(Device device, boolean sync) {
+        this.devices.add(device);
+        if (sync)
+            device.setNetwork(this, false);
+    }
+
 }
