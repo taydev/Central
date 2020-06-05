@@ -1,32 +1,20 @@
-#central: a... virtual computer* within java
+# Central: A virtual computer¹ system/network in Java
 
-This is my contribution for Hacktoberfest 2019. My initial plans were for other people to join in and contribute, but... 
-that ain't happening I don't think. Welp, it's open source software, right? And it's for a future project I hope to
- revive. Actually, it technically is the revival of that project. Just without the Discord.
+Central is a virtual system library written in Java. Originally planned to be used in my Discord bot based OS (Operating System)¹, it's essentially just... a way of virtualising a network of devices in Java. It's a weird concept I made up and I've wanted to be able to execute it for a few years now, but demotivation keeps getting to me whenever I work on it, so I often postpone any updates/commits.
 
-##what is central?
+## What is it used for?
 
-central is a way of creating virtual "computers" within java. why do I quote "computers" or asterisk them? because
- they're not computers in a technical sense. they're just objects. they're more like just extremely complicated state
-  machines.
-  
-  they're not even that complicated, the file system sucked though.
-  
-##what's the uses of central?
+As I said before, it was previously just designed to be used in my Discord bot "circl" as a way of creating an Operating System¹. I wanted to create a Hacknet-esque game of sorts, where users could interface with their own virtual computers via a CLI created in Discord, which could then be interacted with by any of the players in multiple ways. It was going to include things like cryptocurrency wallets, a trading market, full CLI command support, interactions between computers, etc. At the moment, it's just a network... but I plan to develop it in future.
 
-Well, it's mainly just for my usage. However, it can be used for other things of a similar context, I guess. Once 
-it's finished (probably AFTER Hacktoberfest, however I'll continue working on it indefinitely), it'll have some sort
- of modular command system, maybe a developing language so you can write your own applications... there's a lot on
-  the todo list.
-  
-  Basically, it's just a fancy way of making a state machine.
-  
-###To anyone looking at this repo:
+I rebooted it in October 2019 as a Hacktoberfest contribution, but I plan on updating it soon™ and adding in the rest of the features I wanted, like protocol support and better interaction between devices.
 
-- This is 100% a remake of "circl", an old project of mine that's essentially a hacknet clone within Discord.
-- If you're wondering why commits are sparse yet filled with only core mechanics (for now): I wanted to get the core
- functionality done in my free time at college. That's why commits have been 100% core features and no testing.
- - The most recent branch, "testing", is just for cleanup and making sure things work. Basically an *aesthetic* branch.
+## Contributions?
+
+Not for the foreseeable future, no. The reason this project was never completed was due to it originally being a group project that was taken over by the person I used to work with on circl. I don't think I'd be comfortable with accepting other people's work onto it, as I want it to be a personal project.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
 
 
-Thanks for stopping by! :heart:
+¹: it's really just a fancy state machine, but please don't tell anyone
