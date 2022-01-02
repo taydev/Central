@@ -1,3 +1,9 @@
+# PROJECT NO LONGER MAINTAINED - WILL BE ARCHIVED
+
+Sorry to everyone who wanted this. I might bring it back again in future, but at the moment I'm struggling to find motivation to work on it (and also a lack of room for implementing new features, since I've lost a lot of the original ideas).
+
+-------------------------------------------------------
+
 # Central: A virtual computer¹ system/network in Java
 
 Central is a virtual system library written in Java. Originally planned to be used in my Discord bot based OS (Operating System)¹, it's essentially just... a way of virtualising a network of devices in Java. It's a weird concept I made up and I've wanted to be able to execute it for a few years now, but demotivation keeps getting to me whenever I work on it, so I often postpone any updates/commits.
